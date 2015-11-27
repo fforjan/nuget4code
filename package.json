@@ -3,7 +3,20 @@
 	"displayName": "Nuget4Code",
 	"description": "manage nuget for aspnet5",
 	"version": "0.0.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/fforjan/nuget4code/"
+	},
+	"bugs": {
+		"url": "https://github.com/fforjan/nuget4code//issues"
+	},
+	"author": {
+		"name": "Frederic Forjan",
+ 		"email": "fforjan@free.fr",
+		"url": "github.com/fforjan"
+	},
 	"publisher": "fforjan",
+	
 	"engines": {
 		"vscode": "^0.10.1"
 	},
