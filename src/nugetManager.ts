@@ -12,7 +12,7 @@ export default class NugetManager {
 		return this.getCurrentProjectFile()
 				.then( (project: vscode.Uri ) =>
 					{
-						var parsedJSON: any = require(project.fsPath);
+						var parsedJSON: any = JSON.parse(fs.readFileSync(project.fsPath, "utf8"));
 						var result: INugetPackageId[] = [];
 						for (var key in parsedJSON.dependencies) {
 							if (parsedJSON.dependencies.hasOwnProperty(key)) {
