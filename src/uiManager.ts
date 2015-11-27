@@ -1,13 +1,15 @@
-import * as vscode from 'vscode'; 
+"user strict";
 
-export default class uiManager {
-	public static DisplayPackages(packages : {[id: string] : string; }) {
+import * as vscode from "vscode";
+
+export default class UiManager {
+	public displayPackages(packages : {[id: string]: string;}): void {
 		var packagesInfo: string[] = [];
-		
+
 		for (var packageId in packages) {
 			if (packages.hasOwnProperty(packageId)) {
-				var version = packages[packageId];
-				packagesInfo.push( `${packageId}[${version}]`);
+				var version: string = packages[packageId];
+				packagesInfo.push(`${packageId}[${version}]`);
 			}
 		}
 		
