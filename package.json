@@ -13,7 +13,7 @@
 	"author": {
 		"name": "Frederic Forjan",
  		"email": "fforjan@free.fr",
-		"url": "github.com/fforjan"
+		"url": "https://github.com/fforjan"
 	},
 	"publisher": "fforjan",
 	
@@ -25,7 +25,7 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.nuGet.remove",
-		"onCommand:extension.nuGet.query"
+		"onCommand:extension.nuGet.install"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -34,8 +34,8 @@
 			"title": "Nuget: Remove a package from the project.info"
 		},
 		{
-			"command": "extension.nuGet.query",
-			"title": "Nuget: query"
+			"command": "extension.nuGet.install",
+			"title": "Nuget: query nuget repository and install the selected package into the current project json"
 		}]
 	},
 	"scripts": {
