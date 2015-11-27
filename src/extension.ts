@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// register our nuget command
 	var disposable : vscode.Disposable = vscode.commands.registerCommand("extension.nuGet", () => {
 		// display all nuget packages to the user
-		nugetManager.getCurrentPackages().then(uiManager.displayPackages);
+		nugetManager.queryPackage("fred forjan").then(uiManager.displayPackage);
 	});
 
 	context.subscriptions.push(disposable);
