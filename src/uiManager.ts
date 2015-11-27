@@ -2,7 +2,7 @@
 
 import * as vscode from "vscode";
 
-private interface IPackageSelection extends vscode.QuickPickItem {
+interface IPackageSelection extends vscode.QuickPickItem {
 	associatedPackage: INugetPackage;
 }
 
