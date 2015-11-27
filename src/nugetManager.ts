@@ -13,12 +13,12 @@ export default class NugetManager {
 					});
 	}
 
-	public queryPackage(namePattern: string) : Thenable<{ id: string, version: string}> {
+	public queryPackage(namePattern: string) : Thenable<INugetPackage[]> {
 
-		return new Promise<{ id: string, version: string}>(
-			(resolve: (value: { id: string, version: string} ) => void, reject: (reason?: any) => void) =>
+		return new Promise<INugetPackage[]>(
+			(resolve: (value: INugetPackage[] ) => void, reject: (reason?: any) => void) =>
 				{
-					http.get("http://api-v3search-0.nuget.org/query?q=Id:fluent",
+					http.get("http://api-v3search-0.nuget.org/query?q=Id:fluent&take=10",
 							(resp: http.IncomingMessage) => {
 								// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
 								resp.setEncoding('utf8');
@@ -31,7 +31,7 @@ export default class NugetManager {
 								resp.on("end", () => {
 									try {
 										var parsed: any = JSON.parse(body);
-										resolve(parsed.data[0]);
+										resolve(parsed.data);
 									} catch (error) {
 										return reject(error);
 									}});
