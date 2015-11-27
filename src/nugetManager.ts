@@ -22,6 +22,11 @@ export default class NugetManager {
 							}
 						}
 
+						if (result.length === 0)
+						{
+							throw "not package";
+						}
+
 						return result;
 					});
 	}
@@ -47,7 +52,7 @@ export default class NugetManager {
 			(resolve: (value: INugetPackageInfo[] ) => void, reject: (reason?: any) => void) =>
 				{
 					http.get(
-						`http://api-v3search-0.nuget.org/query?q=Id:${namePattern}&take=10`,
+						this.getQueryUri(namePattern),
 						(resp: http.IncomingMessage) => {
 							// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
 							resp.setEncoding("utf8");
@@ -67,5 +72,9 @@ export default class NugetManager {
 							resp.on("error", (e: any) => { reject(e); });
 						});
 				});
+	}
+
+	private getQueryUri(namePattern: string): string {
+		return "http://api-v3search-0.nuget.org/query?q=Id:" + namePattern + "&take=10";
 	}
 }

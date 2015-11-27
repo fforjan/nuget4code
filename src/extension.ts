@@ -22,6 +22,12 @@ export function activate(context: vscode.ExtensionContext): void {
 
 	disposable  = vscode.commands.registerCommand("extension.nuGet.remove", () => {
 		// display all nuget packages to the user
-		nugetManager.getCurrentPackages().then(uiManager.selectPackageFromId).then( nugetManager.removePackage);
+		nugetManager.getCurrentPackages()
+						.then(
+							uiManager.selectPackageFromId,
+							() => vscode.window.showInformationMessage("no packages available in the current project"))
+						.then(
+							nugetManager.removePackage,
+							() => { console.warn("user cancelled package selection"); });
 	});
 }
