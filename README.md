@@ -1,13 +1,8 @@
-# README
-## This is the README for your extension "nuget4code" 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+# Nuget4Code [![Build status](https://travis-ci.org/fforjan/nuget4code.svg)](https://travis-ci.org/fforjan/nuget4code)
 
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
+This is a simple extension to add and remove nuget packages to your project.json.
 
-### For more information
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-** Enjoy!**
+Current limitation:
+- the repository is hard-coded to nuget.org.
+- It only support one project.json. If you have multiple, it will check if one is currently active and use that one if required.
+- it only installs the latest version.
