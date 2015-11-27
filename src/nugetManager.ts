@@ -81,17 +81,24 @@ export default class NugetManager {
 	}
 
 	private getCurrentProjectFile(): Thenable<vscode.Uri> {
-		return vscode.workspace.findFiles("project.json", "")
+		return vscode.workspace.findFiles("**/project.json", "")
 					.then(
 						(files: vscode.Uri[]) =>
 							{
 								if (files.length > 1) {
+									if (!vscode.window.activeTextEditor.document.isUntitled
+										&& vscode.window.activeTextEditor.document.fileName.endsWith("project.json"))
+									{
+										return vscode.window.activeTextEditor.document.uri;
+									}
+
 									throw "More than one project is available, cannot decide";
 								}
 
 								return files[0];
 							},
-						(reason: any) => { throw "no project.json found"; });
+						(reason: any) => {
+							throw "no project.json found"; });
 	}
 
 	/**
