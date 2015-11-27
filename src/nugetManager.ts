@@ -28,15 +28,17 @@ export default class NugetManager {
 
 	public removePackage( packageId: INugetPackageId): Thenable<void> {
 		return vscode.workspace.findFiles("project.json", "")
-					.then((files: vscode.Uri[]) =>
-					{
-						var parsedJSON: any = require(files[0].fsPath);
-						 if (parsedJSON.dependencies.hasOwnProperty(packageId.id))
-						 {
-							delete parsedJSON.dependencies[packageId.id];
-							fs.writeFileSync(files[0].fsPath, JSON.stringify(parsedJSON, null, 4));
-						 }
-					});
+					.then(
+						(files: vscode.Uri[]) =>
+							{
+								var parsedJSON: any = require(files[0].fsPath);
+								if (parsedJSON.dependencies.hasOwnProperty(packageId.id))
+								{
+									delete parsedJSON.dependencies[packageId.id];
+									fs.writeFileSync(files[0].fsPath, JSON.stringify(parsedJSON, null, 4));
+								}
+							},
+						(reason: any) => { throw "no project.json found"; });
 	}
 
 	public queryPackage(namePattern: string): Thenable<INugetPackageInfo[]> {
@@ -44,25 +46,26 @@ export default class NugetManager {
 		return new Promise<INugetPackageInfo[]>(
 			(resolve: (value: INugetPackageInfo[] ) => void, reject: (reason?: any) => void) =>
 				{
-					http.get(`http://api-v3search-0.nuget.org/query?q=Id:${namePattern}&take=10`,
-							(resp: http.IncomingMessage) => {
-								// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
-								resp.setEncoding("utf8");
+					http.get(
+						`http://api-v3search-0.nuget.org/query?q=Id:${namePattern}&take=10`,
+						(resp: http.IncomingMessage) => {
+							// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+							resp.setEncoding("utf8");
 
-								// incrementally capture the incoming response body
-								var body: string = "";
-								resp.on("data", (chunk: any) => { body += chunk; });
+							// incrementally capture the incoming response body
+							var body: string = "";
+							resp.on("data", (chunk: any) => { body += chunk; });
 
-								// do whatever we want with the response once it's done
-								resp.on("end", () => {
-									try {
-										var parsed: any = JSON.parse(body);
-										resolve(parsed.data);
-									} catch (error) {
-										return reject(error);
-									}});
-								resp.on("error", (e: any) => { reject(e); });
-								});
+							// do whatever we want with the response once it's done
+							resp.on("end", () => {
+								try {
+									var parsed: any = JSON.parse(body);
+									resolve(parsed.data);
+								} catch (error) {
+									return reject(error);
+								}});
+							resp.on("error", (e: any) => { reject(e); });
+						});
 				});
 	}
 }

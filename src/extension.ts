@@ -14,10 +14,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
 	// register our nuget command
 	var disposable: vscode.Disposable = vscode.commands.registerCommand("extension.nuGet.query", () => {
-		// display all nuget packages to the user
+		// display all nuget packages to the user so he can select on.
 		nugetManager.queryPackage("fluent").then(uiManager.selectPackage).then( (selected: INugetPackageInfo) => {
-			uiManager.displayPackage("selected", selected); }
-			);
+			uiManager.displayPackage("selected", selected); });
 	});
 	context.subscriptions.push(disposable);
 
