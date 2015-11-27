@@ -6,8 +6,15 @@ import * as http from "http";
 
 import * as fs from "fs";
 
+/**
+ * Manager related to nuget and visual studio code
+ * FIXME base class unrelated to vs code could be completely reused outisde ?? 
+ */
 export default class NugetManager {
 
+	/**
+	 * Get the list of the currently referenced packages
+	 */
 	public getCurrentPackages(): Thenable<INugetPackageId[]> {
 		return this.getCurrentProjectFile()
 				.then( (project: vscode.Uri ) =>

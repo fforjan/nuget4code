@@ -6,3 +6,6 @@ Current limitation:
 - the repository is hard-coded to nuget.org.
 - It only support one project.json. If you have multiple, it will check if one is currently active and use that one if required.
 - it only installs the latest version.
+
+Example :
+![nuget remove and install commands](./resources/commands.png)
