@@ -24,13 +24,18 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.nuGet"
+		"onCommand:extension.nuGet.remove",
+		"onCommand:extension.nuGet.query"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
 		"commands": [{
-			"command": "extension.nuGet",
-			"title": "NuGet Display packages"
+			"command": "extension.nuGet.remove",
+			"title": "Nuget: Remove a package from the project.info"
+		},
+		{
+			"command": "extension.nuGet.query",
+			"title": "Nuget: query"
 		}]
 	},
 	"scripts": {

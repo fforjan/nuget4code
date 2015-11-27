@@ -1,10 +1,14 @@
-interface INugetPackage {
+
+interface INugetPackageId {
+		id: string,
+		version: string
+}
+
+interface INugetPackageInfo extends INugetPackageId {
 	registration: string,
-	id: string,
 	description: string,
 	title: string,
 	authors: string[],
 	totalDownloads: number,
-	version: string,
-	versions: { version: string, download:number}[]
+	versions: { version: string, download: number}[]
 }
