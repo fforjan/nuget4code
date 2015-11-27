@@ -44,7 +44,7 @@ export default class NugetManager {
 		return new Promise<INugetPackageInfo[]>(
 			(resolve: (value: INugetPackageInfo[] ) => void, reject: (reason?: any) => void) =>
 				{
-					http.get("http://api-v3search-0.nuget.org/query?q=Id:fluent&take=10",
+					http.get(`http://api-v3search-0.nuget.org/query?q=Id:${namePattern}&take=10`,
 							(resp: http.IncomingMessage) => {
 								// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
 								resp.setEncoding("utf8");
