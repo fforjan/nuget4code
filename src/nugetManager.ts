@@ -47,7 +47,7 @@ export default class NugetManager {
 									delete parsedJSON.dependencies[packageId.id];
 									fs.writeFileSync(project.fsPath, JSON.stringify(parsedJSON, null, 4));
 								} else {
-									throw "Packages is already not existing";
+									throw "Packages is already removed";
 								}
 							}
 						);

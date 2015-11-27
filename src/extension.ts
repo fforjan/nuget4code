@@ -13,10 +13,11 @@ export function activate(context: vscode.ExtensionContext): void {
 	"use strict";
 
 	// register our nuget command
-	var disposable: vscode.Disposable = vscode.commands.registerCommand("extension.nuGet.install", nugetInstall);
+	var disposable: vscode.Disposable = vscode.commands.registerCommand("extension.nuget4code.install", nugetInstall);
 	context.subscriptions.push(disposable);
 
-	disposable  = vscode.commands.registerCommand("extension.nuGet.Remove", nugetRemove);
+	disposable  = vscode.commands.registerCommand("extension.nuget4code.remove", nugetRemove);
+	context.subscriptions.push(disposable);
 }
 
 /**
@@ -40,10 +41,9 @@ function nugetRemove(): void {
 	"use strict";
 	nugetManager.getCurrentPackages()
 						.then(
-							uiManager.selectPackageFromId,
+							( packages: INugetPackageId[]) => { return uiManager.selectPackageFromId(packages); },
 							() => vscode.window.showInformationMessage("no packages available in the current project"))
 						.then(
-							nugetManager.removePackage,
-							() => { console.warn("user cancelled package selection"); })
-						.then( () => { }, (reason: any) => vscode.window.showInformationMessage(reason));
+							( packageId: INugetPackageId) => { return nugetManager.removePackage(packageId); },
+							() => { console.warn("user cancelled package selection"); });
 }

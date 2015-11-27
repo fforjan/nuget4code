@@ -24,17 +24,17 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.nuGet.remove",
-		"onCommand:extension.nuGet.install"
+		"onCommand:extension.nuget4code.remove",
+		"onCommand:extension.nuget4code.install"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
 		"commands": [{
-			"command": "extension.nuGet.remove",
+			"command": "extension.nuget4code.remove",
 			"title": "Nuget: Remove a package from the project.info"
 		},
 		{
-			"command": "extension.nuGet.install",
+			"command": "extension.nuget4code.install",
 			"title": "Nuget: query nuget repository and install the selected package into the current project json"
 		}]
 	},
