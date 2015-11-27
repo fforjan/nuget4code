@@ -24,7 +24,7 @@ export default class NugetManager {
 
 						if (result.length === 0)
 						{
-							throw "not package";
+							throw "not packages are referenced";
 						}
 
 						return result;
