@@ -9,10 +9,10 @@ import * as fs from "fs";
 export default class NugetManager {
 
 	public getCurrentPackages(): Thenable<INugetPackageId[]> {
-		return vscode.workspace.findFiles("project.json", "")
-					.then((files: vscode.Uri[]) =>
+		return this.getCurrentProjectFile()
+				.then( (project: vscode.Uri ) =>
 					{
-						var parsedJSON: any = require(files[0].fsPath);
+						var parsedJSON: any = require(project.fsPath);
 						var result: INugetPackageId[] = [];
 						for (var key in parsedJSON.dependencies) {
 							if (parsedJSON.dependencies.hasOwnProperty(key)) {
