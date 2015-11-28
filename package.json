@@ -45,16 +45,16 @@
       }
     ],
     "configuration": {
-        "type": "object",
-        "title": "Nuget4Code configuration",
-        "properties": {
-          "nuget4code.repository": {
-            "type": "string",
-            "default": "https://api.nuget.org/v3/index.json",
-            "description": "Repository URL, note that the uri should return end points configuration"
-          }
+      "type": "object",
+      "title": "Nuget4Code configuration",
+      "properties": {
+        "nuget4code.repository": {
+          "type": "string",
+          "default": "https://api.nuget.org/v3/index.json",
+          "description": "Repository URL, note that the uri should return end points configuration"
         }
       }
+    }
   },
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
@@ -62,6 +62,7 @@
     "test": "node ./node_modules/vscode/bin/compile -p ./"
   },
   "devDependencies": {
+    "should": "^7.1.1",
     "typescript": "^1.6.2",
     "vscode": "0.10.x"
   },

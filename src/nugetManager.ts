@@ -17,18 +17,25 @@ export default class NugetManager {
 	private queryEndpoint: string;
 	private endPointsInitialization: Thenable<void>;
 
-	constructor() {
-		var repository: string = vscode.workspace.getConfiguration("nuget4code")["repository"];
-		this.endPointsInitialization = this.getJsonResponse(repository)
-			.then( (servicesIndex: any) => {
-				var allEndpoints: { "@id": string, "@type": string}[] = servicesIndex.resources;
-				return allEndpoints
-						.find( (endpoint: { "@id": string, "@type": string}) => endpoint["@type"] === "SearchQueryService")
-						["@id"];
-			})
-			.then( (endpoint: string) => { this.queryEndpoint = endpoint; });
+	/**
+	 * Constructor
+	 * 
+	 * @initialize only use for unit testing to not trigger full initialization
+	 */
+	constructor(initialize: boolean = true) {
+		if ( initialize) {
+			var repository: string = vscode.workspace.getConfiguration("nuget4code")["repository"];
+			this.endPointsInitialization = this.getJsonResponse(repository)
+				.then( (servicesIndex: any) => {
+					var allEndpoints: { "@id": string, "@type": string}[] = servicesIndex.resources;
+					return allEndpoints
+							.find( (endpoint: { "@id": string, "@type": string}) => endpoint["@type"] === "SearchQueryService")
+							["@id"];
+				})
+				.then( (endpoint: string) => { this.queryEndpoint = endpoint; });
 
-			// fixme support invalid endpoint !
+				// fixme support invalid endpoint !
+		}
 	}
 
 	/**
