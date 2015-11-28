@@ -24,23 +24,27 @@ suite("Nuget4Code endpoints-related tests", () => {
 
 	test("getQueryUri is consuming the endoint", () => {
 		// arrange
-		var nugetManager: any = new NugetManager(false);
-		nugetManager.queryEndpoint = "htts://example:4242/";
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.queryEndpoint = "htts://example:4242/";
 
 		// act
-		var value:Object = nugetManager.getQueryUri("random");
+		var value:Object = nugetManagerPrivate.getQueryUri("random");
 
 		// assert
-		value.should.startWith(nugetManager.queryEndpoint);
+		value.should.startWith(nugetManagerPrivate.queryEndpoint);
 		value.should.containEql("random");
 	});
 
 	test("queryPackage is working without internet", (done: MochaDone) => {
 		// arrange
-		var nugetManager: any = new NugetManager(false);
-		nugetManager.queryEndpoint = "htts://example:4242/";
-		nugetManager.endPointsInitialization = Promise.reject("unit rest");
-		nugetManager.getJsonResponse = () => { throw "should not be called"; };
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.queryEndpoint = "htts://example:4242/";
+		nugetManagerPrivate.endPointsInitialization = Promise.reject("unit rest");
+		nugetManagerPrivate.getJsonResponse = () => { throw "should not be called"; };
 
 		// act
 		var thenable = nugetManager.queryPackage("random");

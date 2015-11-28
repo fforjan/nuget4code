@@ -36,8 +36,8 @@ suite("Nuget4Code filesystem-related tests", () => {
 	test("removePackage is not working on invalid file", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
-
 		var nugetManagerPrivate: any = nugetManager;
+
 		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("invalid.json"));
 
 		// act
@@ -50,8 +50,8 @@ suite("Nuget4Code filesystem-related tests", () => {
 	test("removePackage is not working on valid file / missing package", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
-
 		var nugetManagerPrivate: any = nugetManager;
+
 		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
 
 		// act
@@ -64,8 +64,8 @@ suite("Nuget4Code filesystem-related tests", () => {
 	test("removePackage is working as expected", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
-
 		var nugetManagerPrivate: any = nugetManager;
+
 		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
 
 		// act
@@ -81,8 +81,8 @@ suite("Nuget4Code filesystem-related tests", () => {
 	test("removePackage after removePackage is working as expected", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
-
 		var nugetManagerPrivate: any = nugetManager;
+
 		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
 
 		// act
