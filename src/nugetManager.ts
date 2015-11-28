@@ -130,10 +130,13 @@ export default class NugetManager {
 	public queryPackage(idPattern: string): Thenable<INugetPackageInfo[]> {
 		// we can only do our query if it was initialised properly
 		return this.endPointsInitialization
-			.then( () => {
-				return this.getJsonResponse(this.getQueryUri(idPattern))
-					.then( (result: any) => result.data);
-			});
+			.then(
+				() => {
+					return this.getJsonResponse(this.getQueryUri(idPattern))
+						.then( (result: any) => result.data); },
+				() => {
+					return [];
+				});
 	}
 
 	/**

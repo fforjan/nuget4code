@@ -14,7 +14,7 @@ import NugetManager from "../src/nugetManager";
 
 suite("Nuget4Code Tests", () => {
 
-	test("NugetManager", () => {
+	test("getQueryUri", () => {
 		// arrange
 		var nugetManager: any = new NugetManager(false);
 		nugetManager.queryEndpoint = "htts://example:4242/";
@@ -25,6 +25,24 @@ suite("Nuget4Code Tests", () => {
 		// assert
 		value.should.startWith(nugetManager.queryEndpoint);
 		value.should.containEql("random");
+	});
 
+	test("queryPackage", (done: MochaDone) => {
+		// arrange
+		var nugetManager: any = new NugetManager(false);
+		nugetManager.queryEndpoint = "htts://example:4242/";
+		nugetManager.endPointsInitialization = Promise.reject("unit rest");
+		nugetManager.getJsonResponse = () => { throw "should not be called" };
+
+		// act
+		nugetManager.queryPackage("random")
+				.then ( (packages: any[]) => {
+					packages.should.be.empty;
+					done();
+				}, (reason: any) => {
+					done(new Error(reason.toString()));
+				 });
+
+		// assert
 	});
 });
