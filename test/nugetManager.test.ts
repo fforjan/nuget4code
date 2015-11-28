@@ -37,8 +37,11 @@ suite("Nuget4Code Tests", () => {
 		// act
 		nugetManager.queryPackage("random")
 				.then ( (packages: any[]) => {
-					packages.should.be.empty;
-					done();
+					try
+					{
+						packages.length.should.be.equal(1);
+						done();
+					} catch (e) { done(e); }
 				}, (reason: any) => {
 					done(new Error(reason.toString()));
 				 });
