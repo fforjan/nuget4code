@@ -1,4 +1,4 @@
-"user strict";
+"use strict";
 
 import * as vscode from "vscode";
 
@@ -39,6 +39,10 @@ export default class UiManager {
 
 	public displayPackage(message: string, packageInfo: INugetPackageId): void {
 
-		vscode.window.showInformationMessage(`${message} : ${packageInfo.id}[${packageInfo.version}]`);	
+		vscode.window.showInformationMessage(`${message} : ${packageInfo.id}[${packageInfo.version}]`);
+	}
+
+	public queryPackagePattern(): Thenable<string> {
+		return vscode.window.showInputBox({ prompt: "Enter package filter :"});
 	}
 }

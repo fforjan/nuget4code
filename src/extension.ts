@@ -29,7 +29,8 @@ function nugetInstall(): void {
 	"use strict";
 
 	// display all nuget packages to the user so he can select on.
-	nugetManager.queryPackage("fluent")
+	uiManager.queryPackagePattern()
+		.then( (idPattern: string ) => nugetManager.queryPackage(idPattern) )
 		.then( (packages: INugetPackageInfo[]) => { return uiManager.selectPackage(packages); } )
 		.then( (selected: INugetPackageInfo) => { nugetManager.addedOrUpdatePackage(selected); });
 }
