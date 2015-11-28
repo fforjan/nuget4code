@@ -57,6 +57,19 @@ export default class NugetManager {
 					});
 	}
 
+	public getFullInformation(packages: INugetPackageId[]): Thenable<{ current: INugetPackageId, latest: INugetPackageInfo }[]>
+	{
+		var requests: Thenable<{ current: INugetPackageId, latest: INugetPackageInfo }>[] = [];
+
+		packages.forEach( (element: INugetPackageId) => {
+			requests.push(
+					this.queryPackage(element.id)
+						.then( (result: INugetPackageInfo[] ) => { return { current: element, latest: result[0] }; }) );
+		});
+
+		return Promise.all(requests);
+	}
+
 	/**
 	 * Remove a package identified by the package id from the current project file.
 	 * 

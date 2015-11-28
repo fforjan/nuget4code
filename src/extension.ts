@@ -18,6 +18,9 @@ export function activate(context: vscode.ExtensionContext): void {
 
 	disposable  = vscode.commands.registerCommand("extension.nuget4code.remove", nugetRemove);
 	context.subscriptions.push(disposable);
+
+	disposable  = vscode.commands.registerCommand("extension.nuget4code.upgrade", nugetUpgrade);
+	context.subscriptions.push(disposable);
 }
 
 /**
@@ -47,4 +50,14 @@ function nugetRemove(): void {
 					.then(
 						( packageId: INugetPackageId ) => { return nugetManager.removePackage(packageId); },
 						() => { console.warn("user cancelled package selection"); });
+}
+
+function nugetUpgrade(): void {
+	"use strict";
+
+	// display all nuget packages to the user so he can select on.
+	nugetManager.getCurrentPackages()
+		.then( ( packages: INugetPackageId[] ) => { return nugetManager.getFullInformation(packages); })
+		.then( ( information: { current: INugetPackageId, latest: INugetPackageInfo }[]) => { return uiManager.pickForUpgrade(information); })
+		.then( (selected: INugetPackageInfo) => { nugetManager.addedOrUpdatePackage(selected); });
 }

@@ -64,4 +64,22 @@ export default class UiManager {
 	public queryPackagePattern(): Thenable<string> {
 		return vscode.window.showInputBox({ prompt: "Enter package filter :"});
 	}
+
+	public pickForUpgrade(packages: { current: INugetPackageId, latest: INugetPackageInfo }[]): Thenable<INugetPackageInfo> {
+		var packagesInfo: IPackageSelection[] = [];
+
+		packages.forEach((element: { current: INugetPackageId, latest: INugetPackageInfo }) => {
+
+			if(element.current.version !== element.latest.version)
+			{
+				packagesInfo.push({
+					label: `Upgrade ${element.latest.title}`,
+					description: `from ${element.current.version} to ${element.latest.version}`,
+					associatedPackage: element.latest
+				});
+			}
+		});
+
+		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+	}
 }

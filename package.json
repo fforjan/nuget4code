@@ -25,7 +25,8 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.nuget4code.remove",
-		"onCommand:extension.nuget4code.install"
+		"onCommand:extension.nuget4code.install",
+		"onCommand:extension.nuget4code.upgrade"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -36,6 +37,10 @@
 		{
 			"command": "extension.nuget4code.install",
 			"title": "Nuget: Install/Reference a package into the project.info"
+		},
+		{
+			"command": "extension.nuget4code.upgrade",
+			"title": "Nuget: Upgrade to latest into the project.info"
 		}]
 	},
 	"scripts": {
