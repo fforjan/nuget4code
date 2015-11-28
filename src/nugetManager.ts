@@ -172,10 +172,18 @@ export default class NugetManager {
 							throw "error while looking for project.json"; });
 	}
 
+	/**
+	 * Get all project file from the workspace.
+	 * @remark specific method for unit testing.
+	 */
 	private getAllProjectFile(): Thenable<vscode.Uri[]> {
 		return vscode.workspace.findFiles("**/project.json", "");
 	}
 
+	/**
+	 * Get active project file from the workspace, return null if none.
+	 * @remark specific method for unit testing.
+	 */
 	private getActiveDocumentAsProjectJson(): vscode.Uri {
 		if (!vscode.window.activeTextEditor.document.isUntitled
 										&& vscode.window.activeTextEditor.document.fileName.endsWith("project.json"))

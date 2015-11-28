@@ -103,7 +103,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 
 		// act
 		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
-			.getCurrentProjectFile({ id: "testPackage", version: ""})
+			.getCurrentProjectFile({ id: "testPackage", version: ""});
 
 	 	// assert
 		ThenableAssert.shouldBeRejected(thenable, done);
@@ -118,7 +118,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 
 		// act
 		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
-			.getCurrentProjectFile({ id: "testPackage", version: ""})
+			.getCurrentProjectFile({ id: "testPackage", version: ""});
 
 	 	// assert
 		ThenableAssert.shouldBeRejected(thenable, done);
@@ -134,7 +134,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 
 		// act
 		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
-			.getCurrentProjectFile({ id: "testPackage", version: ""})
+			.getCurrentProjectFile({ id: "testPackage", version: ""});
 
 	 	// assert
 		ThenableAssert.shouldBeRejected(thenable, done);
@@ -150,7 +150,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 
 		// act
 		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
-			.getCurrentProjectFile({ id: "testPackage", version: ""})
+			.getCurrentProjectFile({ id: "testPackage", version: ""});
 
 	 	// assert
 		ThenableAssert.shouldBeResolved(thenable, done, (selected: vscode.Uri) => { selected.fsPath.should.equal("withTestPackage.json"); });
