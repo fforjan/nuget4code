@@ -18,7 +18,7 @@ import "should";
 // as well as import your extension to test it
 import NugetManager from "../src/nugetManager";
 
-suite("Nuget4Code Tests", () => {
+suite("Nuget4Code filesystem-related tests", () => {
 	setup(() => {
 		mockfs(
 			{
@@ -28,42 +28,7 @@ suite("Nuget4Code Tests", () => {
 		});
 
 	teardown(mockfs.restore);
-
-	test("getQueryUri", () => {
-		// arrange
-		var nugetManager: any = new NugetManager(false);
-		nugetManager.queryEndpoint = "htts://example:4242/";
-
-		// act
-		var value:Object = nugetManager.getQueryUri("random");
-
-		// assert
-		value.should.startWith(nugetManager.queryEndpoint);
-		value.should.containEql("random");
-	});
-
-	test("queryPackage is working without internet", (done: MochaDone) => {
-		// arrange
-		var nugetManager: any = new NugetManager(false);
-		nugetManager.queryEndpoint = "htts://example:4242/";
-		nugetManager.endPointsInitialization = Promise.reject("unit rest");
-		nugetManager.getJsonResponse = () => { throw "should not be called"; };
-
-		// act
-		nugetManager.queryPackage("random")
-				.then ( (packages: any[]) => {
-					try
-					{
-						packages.length.should.be.equal(0);
-						done();
-					} catch (e) { done(e); }
-				}, (reason: any) => {
-					done(new Error(reason.toString()));
-				 });
-
-		// assert
-	});
-
+	
 	test("removePackage is not working on invalid file", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
