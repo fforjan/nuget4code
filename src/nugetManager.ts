@@ -8,15 +8,27 @@ import * as http from "http";
 
 import * as fs from "fs";
 
+const repository: string = "https://api.nuget.org/v3/index.json";
+
 /**
  * Manager related to nuget and visual studio code
  * FIXME base class unrelated to vs code could be completely reused outisde ?? 
  */
 export default class NugetManager {
 
+	private queryEndpoint: string;
 
 	constructor() {
-		// getJsonResponse("")
+		this.getJsonResponse(repository)
+			.then( (servicesIndex: any) => {
+				var allEndpoints: { "@id": string, "@type": string}[] = servicesIndex.resources;
+				return allEndpoints
+						.find( (endpoint: { "@id": string, "@type": string}) => endpoint["@type"] === "SearchQueryService")
+						["@id"];
+			})
+			.then( (endpoint: string) => this.queryEndpoint = endpoint);
+
+			// fixme support invalid endpoint !
 	}
 
 	/**
@@ -107,7 +119,7 @@ export default class NugetManager {
 	 * @param idPattern pattern to be used for filtering.
 	 */
 	private getQueryUri(idPattern: string): string {
-		return "https://api-v3search-0.nuget.org/query?q=Id:" + idPattern + "&take=10";
+		return this.queryEndpoint + "?q=Id:" + idPattern + "&take=10";
 	}
 
 	private getCurrentProjectFile(): Thenable<vscode.Uri> {
