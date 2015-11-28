@@ -6,6 +6,8 @@
 // the module 'assert' provides assertion methods from node
 import * as assert from "assert"; 
 
+import * as vscode from "vscode";
+
 import "should";
 
 // you can import and use all API from the 'vscode' module
@@ -27,12 +29,12 @@ suite("Nuget4Code Tests", () => {
 		value.should.containEql("random");
 	});
 
-	test("queryPackage", (done: MochaDone) => {
+	test("queryPackage is working without internet", (done: MochaDone) => {
 		// arrange
 		var nugetManager: any = new NugetManager(false);
 		nugetManager.queryEndpoint = "htts://example:4242/";
 		nugetManager.endPointsInitialization = Promise.reject("unit rest");
-		nugetManager.getJsonResponse = () => { throw "should not be called" };
+		nugetManager.getJsonResponse = () => { throw "should not be called"; };
 
 		// act
 		nugetManager.queryPackage("random")
@@ -48,4 +50,20 @@ suite("Nuget4Code Tests", () => {
 
 		// assert
 	});
+
+	test("removePackage is not working on invalid file", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+
+		var nugetManagerPrivate: any = nugetManager;
+		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("/Users/GeoVah/Projects/asp5console/HelloLeMonde/project.jason"));
+
+		// act
+		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "MySql.Data.Entity", version: ""});
+
+		// assert
+		thenable.then ( () => { done( new Error("not expected path")); } ,
+						() => { done(); });
+	});
+
 });
