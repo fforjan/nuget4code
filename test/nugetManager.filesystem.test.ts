@@ -12,7 +12,11 @@ import * as vscode from "vscode";
 
 import * as mockfs from "mock-fs";
 
+import * as fs from "fs";
+
 import "should";
+
+import * as ThenableAssert from "./ThenableAssert";
 
 // you can import and use all API from the 'vscode' module
 // as well as import your extension to test it
@@ -40,8 +44,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "MySql.Data.Entity", version: ""});
 
 		// assert
-		thenable.then ( () => { done( new Error("not expected path")); } ,
-						() => { done(); });
+		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
 	test("removePackage is not working on valid file / missing package", (done: MochaDone) => {
@@ -55,8 +58,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "MySql.Data.Entity", version: ""});
 
 		// assert
-		thenable.then ( () => { done( new Error("not expected path")); } ,
-						() => { done(); });
+		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
 	test("removePackage is working as expected", (done: MochaDone) => {
@@ -70,8 +72,9 @@ suite("Nuget4Code filesystem-related tests", () => {
 		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "testPackage", version: ""});
 
 		// assert
-		thenable.then ( () => { done(); } ,
-						() => { done(new Error("not expected path")); });
+		ThenableAssert.shouldBeResolved(thenable, done);
+
+		// fs.readFileSync("withTestPackage.json", "utf8").should.not.containEql("testPackage");
 	});
 
 	test("removePackage after removePackage is working as expected", (done: MochaDone) => {
@@ -87,8 +90,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 			.then ( () => nugetManager.removePackage({ id: "testPackage", version: ""}));
 
 	 	// assert
-		thenable.then ( () => { done(new Error("not expected path")); } ,
-						() => { done(); });
+		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
 });
