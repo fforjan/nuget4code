@@ -39,7 +39,7 @@ suite("Nuget4Code Tests", () => {
 				.then ( (packages: any[]) => {
 					try
 					{
-						packages.length.should.be.equal(1);
+						packages.length.should.be.equal(0);
 						done();
 					} catch (e) { done(e); }
 				}, (reason: any) => {
