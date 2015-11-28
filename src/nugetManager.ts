@@ -8,8 +8,6 @@ import * as http from "http";
 
 import * as fs from "fs";
 
-const repository: string = "https://api.nuget.org/v3/index.json";
-
 /**
  * Manager related to nuget and visual studio code
  * FIXME base class unrelated to vs code could be completely reused outisde ?? 
@@ -20,6 +18,7 @@ export default class NugetManager {
 	private endPointsInitialization: Thenable<void>;
 
 	constructor() {
+		var repository: string = vscode.workspace.getConfiguration("nuget4code")["repository"];
 		this.endPointsInitialization = this.getJsonResponse(repository)
 			.then( (servicesIndex: any) => {
 				var allEndpoints: { "@id": string, "@type": string}[] = servicesIndex.resources;

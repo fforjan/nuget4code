@@ -43,7 +43,18 @@
         "command": "extension.nuget4code.upgrade",
         "title": "Nuget: Upgrade to latest into the project.info"
       }
-    ]
+    ],
+    "configuration": {
+        "type": "object",
+        "title": "Nuget4Code configuration",
+        "properties": {
+          "nuget4code.repository": {
+            "type": "string",
+            "default": "https://api.nuget.org/v3/index.json",
+            "description": "Repository URL, note that the uri should return end points configuration"
+          }
+        }
+      }
   },
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
