@@ -72,9 +72,10 @@ suite("Nuget4Code filesystem-related tests", () => {
 		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "testPackage", version: ""});
 
 		// assert
-		ThenableAssert.shouldBeResolved(thenable, done);
-
-		// fs.readFileSync("withTestPackage.json", "utf8").should.not.containEql("testPackage");
+		ThenableAssert.shouldBeResolved(thenable, done, () => {
+				fs.readFileSync("withTestPackage.json", "utf8").should.not.containEql("testPackage");
+			}
+		);
 	});
 
 	test("removePackage after removePackage is working as expected", (done: MochaDone) => {

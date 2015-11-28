@@ -18,6 +18,8 @@ import "should";
 // as well as import your extension to test it
 import NugetManager from "../src/nugetManager";
 
+import * as ThenableAssert from "./ThenableAssert";
+
 suite("Nuget4Code endpoints-related tests", () => {
 
 	test("getQueryUri is consuming the endoint", () => {
@@ -41,17 +43,10 @@ suite("Nuget4Code endpoints-related tests", () => {
 		nugetManager.getJsonResponse = () => { throw "should not be called"; };
 
 		// act
-		nugetManager.queryPackage("random")
-				.then ( (packages: any[]) => {
-					try
-					{
-						packages.length.should.be.equal(0);
-						done();
-					} catch (e) { done(e); }
-				}, (reason: any) => {
-					done(new Error(reason.toString()));
-				 });
+		var thenable = nugetManager.queryPackage("random");
 
 		// assert
+		ThenableAssert.shouldBeResolved(thenable, done,
+			(packages: INugetPackageInfo[] ) =>  { packages.length.should.be.equal(0); });
 	});
 });
