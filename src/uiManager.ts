@@ -70,7 +70,7 @@ export default class UiManager {
 
 		packages.forEach((element: { current: INugetPackageId, latest: INugetPackageInfo }) => {
 
-			if(element.current.version !== element.latest.version)
+			if (element.current.version !== element.latest.version)
 			{
 				packagesInfo.push({
 					label: `Upgrade ${element.latest.title}`,
