@@ -94,4 +94,66 @@ suite("Nuget4Code filesystem-related tests", () => {
 		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
+	test("getCurrentProjectFile should be rejected when no project are found", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.getAllProjectFile = () => Promise.resolve([]);
+
+		// act
+		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
+			.getCurrentProjectFile({ id: "testPackage", version: ""})
+
+	 	// assert
+		ThenableAssert.shouldBeRejected(thenable, done);
+	});
+
+	test("getCurrentProjectFile should be rejected when the search is rejected", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.getAllProjectFile = () => Promise.reject("unit test");
+
+		// act
+		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
+			.getCurrentProjectFile({ id: "testPackage", version: ""})
+
+	 	// assert
+		ThenableAssert.shouldBeRejected(thenable, done);
+	});
+
+	test("getCurrentProjectFile should be rejected when more than one result and no active project.", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.getAllProjectFile = () => Promise.resolve([ {}, {} ]);
+		nugetManagerPrivate.getActiveDocumentAsProjectJson = () => null;
+
+		// act
+		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
+			.getCurrentProjectFile({ id: "testPackage", version: ""})
+
+	 	// assert
+		ThenableAssert.shouldBeRejected(thenable, done);
+	});
+
+	test("getCurrentProjectFile should be resolved when more than one result and one active project.", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+		var nugetManagerPrivate: any = nugetManager;
+
+		nugetManagerPrivate.getAllProjectFile = () => Promise.resolve([ {}, {} ]);
+		nugetManagerPrivate.getActiveDocumentAsProjectJson = () => vscode.Uri.file("withTestPackage.json");
+
+		// act
+		var thenable: Thenable<vscode.Uri> = nugetManagerPrivate
+			.getCurrentProjectFile({ id: "testPackage", version: ""})
+
+	 	// assert
+		ThenableAssert.shouldBeResolved(thenable, done, (selected: vscode.Uri) => { selected.fsPath.should.equal("withTestPackage.json"); });
+	});
+
 });
