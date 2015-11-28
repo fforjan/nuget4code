@@ -61,6 +61,29 @@ export default class NugetManager {
 	}
 
 	/**
+	 * Add a package identified by the package id from the current project file.
+	 * 
+	 * @param packageId package to be added
+	 */
+	public addedOrUpdatePackage( packageId: INugetPackageId): Thenable<void> {
+		return this.getCurrentProjectFile()
+					.then(
+						(project: vscode.Uri ) =>
+							{
+								var parsedJSON: any = require(project.fsPath);
+								if (!parsedJSON.hasOwnProperty("dependencies"))
+								{
+									parsedJSON.dependecies = [];
+								}
+
+								parsedJSON.dependencies[packageId.id] = packageId.version;
+
+								fs.writeFileSync(project.fsPath, JSON.stringify(parsedJSON, null, 4));
+							}
+						);
+	}
+
+	/**
 	 * Query Nuget repository for returning packages information matching the id pattern
 	 *
 	 * @param idPattern pattern to be used for lookup.
