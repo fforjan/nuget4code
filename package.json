@@ -35,7 +35,7 @@
 		},
 		{
 			"command": "extension.nuget4code.install",
-			"title": "Nuget: Install a package from the project.info"
+			"title": "Nuget: Install/Reference a package into the project.info"
 		}]
 	},
 	"scripts": {

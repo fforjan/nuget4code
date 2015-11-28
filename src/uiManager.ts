@@ -6,7 +6,14 @@ interface IPackageSelection extends vscode.QuickPickItem {
 	associatedPackage: INugetPackageId;
 }
 
+/**
+ * UI Manager for all nuget related activities.
+ */
 export default class UiManager {
+
+	/**
+	 * Ask the user to make a choice between packages from reduced package information
+	 */
 	public selectPackageFromId(packages: INugetPackageId[]): Thenable<INugetPackageId> {
 		var packagesInfo: IPackageSelection[] = [];
 
@@ -22,13 +29,16 @@ export default class UiManager {
 		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
+	/**
+	 * Ask the user to make a choice between packages from full package information
+	 */
 	public selectPackage(packages: INugetPackageInfo[]): Thenable<INugetPackageInfo> {
 		var packagesInfo: IPackageSelection[] = [];
 
 		packages.forEach((element: INugetPackageInfo) => {
 
 			packagesInfo.push({
-					label: element.title,
+					label: `${element.title} - ${element.version}`,
 					description: element.description,
 					associatedPackage: element
 				});
@@ -37,11 +47,20 @@ export default class UiManager {
 		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
+	/**
+	 * Display some information about the package.
+	 * 
+	 * @param message prefix to be displayed
+	 * @param packageInfo package information
+	 */
 	public displayPackage(message: string, packageInfo: INugetPackageId): void {
 
 		vscode.window.showInformationMessage(`${message} : ${packageInfo.id}[${packageInfo.version}]`);
 	}
 
+	/**
+	 * Ask the user for a package filter information
+	 */
 	public queryPackagePattern(): Thenable<string> {
 		return vscode.window.showInputBox({ prompt: "Enter package filter :"});
 	}
