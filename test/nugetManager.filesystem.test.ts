@@ -33,7 +33,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 
 	teardown(mockfs.restore);
 	
-	test("removePackage is not working on invalid file", (done: MochaDone) => {
+	test("removePackage should reject on invalid file", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
 		var nugetManagerPrivate: any = nugetManager;
@@ -47,7 +47,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
-	test("removePackage is not working on valid file / missing package", (done: MochaDone) => {
+	test("removePackage should reject when valid file / missing package", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
 		var nugetManagerPrivate: any = nugetManager;
@@ -61,7 +61,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		ThenableAssert.shouldBeRejected(thenable, done);
 	});
 
-	test("removePackage is working as expected", (done: MochaDone) => {
+	test("removePackage should resolve when package exists", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
 		var nugetManagerPrivate: any = nugetManager;
@@ -78,7 +78,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		);
 	});
 
-	test("removePackage after removePackage is working as expected", (done: MochaDone) => {
+	test("removePackage after removePackage should be rejected (ensuring no caching)", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
 		var nugetManagerPrivate: any = nugetManager;
