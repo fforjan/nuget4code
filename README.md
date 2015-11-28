@@ -2,6 +2,13 @@
 
 This is a simple extension to add and remove nuget packages to your project.json.
 
+## Where is the name coming from ?
+
+Well, I was looking for an excuse to do some coding into Visual Studio Code extensions... 
+And I'm looking to demo aspnet5 ConsoleApplication to my team and was missing the nuget stuff.
+So, which is my reason to code ? Yes, nuget4code !
+Also, instead of dogfood, I prefer to eat my own nuggets.. So here is nuget4code.
+
 ## Feature:
 - Query and add a package from official nuget.org repository
 - Remove a referenced package
