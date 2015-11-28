@@ -2,6 +2,8 @@
 
 import * as vscode from "vscode";
 
+import * as semver from "semver";
+
 interface IPackageSelection extends vscode.QuickPickItem {
 	associatedPackage: INugetPackageId;
 }
@@ -70,15 +72,29 @@ export default class UiManager {
 
 		packages.forEach((element: { current: INugetPackageId, latest: INugetPackageInfo }) => {
 
-			if (element.current.version !== element.latest.version)
-			{
-				packagesInfo.push({
-					label: `Upgrade ${element.latest.title}`,
-					description: `from ${element.current.version} to ${element.latest.version}`,
-					associatedPackage: element.latest
-				});
+			try {
+				if (semver.gt(element.latest.version, element.current.version ) )
+				{
+					packagesInfo.push({
+						label: `Upgrade ${element.latest.title}`,
+						description: `from ${element.current.version} to ${element.latest.version}`,
+						associatedPackage: element.latest
+					});
+				}
+			} catch (exception) {
+				if ((exception instanceof TypeError)) {
+					console.log(`cannot parse version for package ${element.current.id} : ${exception}`);
+				} else
+				{
+					throw exception;
+				}
 			}
 		});
+
+		if (packagesInfo.length === 0 ) {
+			vscode.window.showInformationMessage("nothing to upgrade");
+			throw "nothing to upgrade";
+		}
 
 		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}

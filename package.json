@@ -1,55 +1,60 @@
 {
-	"name": "nuget4code",
-	"displayName": "Nuget4Code",
-	"description": "manage nuget for aspnet5",
-	"version": "0.0.1",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/fforjan/nuget4code/"
-	},
-	"bugs": {
-		"url": "https://github.com/fforjan/nuget4code//issues"
-	},
-	"author": {
-		"name": "Frederic Forjan",
- 		"email": "fforjan@free.fr",
-		"url": "https://github.com/fforjan"
-	},
-	"publisher": "fforjan",
-	
-	"engines": {
-		"vscode": "^0.10.1"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.nuget4code.remove",
-		"onCommand:extension.nuget4code.install",
-		"onCommand:extension.nuget4code.upgrade"
-	],
-	"main": "./out/src/extension",
-	"contributes": {
-		"commands": [{
-			"command": "extension.nuget4code.remove",
-			"title": "Nuget: Remove a package from the project.info"
-		},
-		{
-			"command": "extension.nuget4code.install",
-			"title": "Nuget: Install/Reference a package into the project.info"
-		},
-		{
-			"command": "extension.nuget4code.upgrade",
-			"title": "Nuget: Upgrade to latest into the project.info"
-		}]
-	},
-	"scripts": {
-		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-		"test": "node ./node_modules/vscode/bin/compile -p ./"
-	},
-	"devDependencies": {
-		"typescript": "^1.6.2",
-		"vscode": "0.10.x"
-	}
+  "name": "nuget4code",
+  "displayName": "Nuget4Code",
+  "description": "manage nuget packages within Visual Studio Code",
+  "license": "MIT",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fforjan/nuget4code/"
+  },
+  "bugs": {
+    "url": "https://github.com/fforjan/nuget4code/issues"
+  },
+  "author": {
+    "name": "Frederic Forjan",
+    "email": "fforjan@free.fr",
+    "url": "https://github.com/fforjan"
+  },
+  "publisher": "fforjan",
+  "engines": {
+    "vscode": "^0.10.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.nuget4code.remove",
+    "onCommand:extension.nuget4code.install",
+    "onCommand:extension.nuget4code.upgrade"
+  ],
+  "main": "./out/src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.nuget4code.remove",
+        "title": "Nuget: Remove a package from the project.info"
+      },
+      {
+        "command": "extension.nuget4code.install",
+        "title": "Nuget: Install/Reference a package into the project.info"
+      },
+      {
+        "command": "extension.nuget4code.upgrade",
+        "title": "Nuget: Upgrade to latest into the project.info"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
+    "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
+    "test": "node ./node_modules/vscode/bin/compile -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^1.6.2",
+    "vscode": "0.10.x"
+  },
+  "dependencies": {
+    "semver": "^5.1.0"
+  }
 }

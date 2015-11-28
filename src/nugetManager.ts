@@ -17,16 +17,17 @@ const repository: string = "https://api.nuget.org/v3/index.json";
 export default class NugetManager {
 
 	private queryEndpoint: string;
+	private endPointsInitialization: Thenable<void>;
 
 	constructor() {
-		this.getJsonResponse(repository)
+		this.endPointsInitialization = this.getJsonResponse(repository)
 			.then( (servicesIndex: any) => {
 				var allEndpoints: { "@id": string, "@type": string}[] = servicesIndex.resources;
 				return allEndpoints
 						.find( (endpoint: { "@id": string, "@type": string}) => endpoint["@type"] === "SearchQueryService")
 						["@id"];
 			})
-			.then( (endpoint: string) => this.queryEndpoint = endpoint);
+			.then( (endpoint: string) => { this.queryEndpoint = endpoint; });
 
 			// fixme support invalid endpoint !
 	}
@@ -121,9 +122,12 @@ export default class NugetManager {
 	 * @param idPattern pattern to be used for lookup.
 	 */
 	public queryPackage(idPattern: string): Thenable<INugetPackageInfo[]> {
-
-		return this.getJsonResponse(this.getQueryUri(idPattern))
-				.then( (result: any) => result.data);
+		// we can only do our query if it was initialised properly
+		return this.endPointsInitialization
+			.then( () => {
+				return this.getJsonResponse(this.getQueryUri(idPattern))
+					.then( (result: any) => result.data);
+			});
 	}
 
 	/**
