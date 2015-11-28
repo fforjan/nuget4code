@@ -1,3 +1,5 @@
+"use strict";
+
 // 
 // note: This test is leveraging the Mocha test framework.
 // please refer to their documentation on https://mochajs.org/ for help.
@@ -8,6 +10,8 @@ import * as assert from "assert";
 
 import * as vscode from "vscode";
 
+import * as mockfs from "mock-fs";
+
 import "should";
 
 // you can import and use all API from the 'vscode' module
@@ -15,6 +19,15 @@ import "should";
 import NugetManager from "../src/nugetManager";
 
 suite("Nuget4Code Tests", () => {
+	setup(() => {
+		mockfs(
+			{
+				"invalid.json": "random",
+				"withTestPackage.json": '{ "dependencies" : { "testPackage": "1.0.0" } }'
+			});
+		});
+
+	teardown(mockfs.restore);
 
 	test("getQueryUri", () => {
 		// arrange
@@ -56,13 +69,60 @@ suite("Nuget4Code Tests", () => {
 		var nugetManager: NugetManager = new NugetManager(false);
 
 		var nugetManagerPrivate: any = nugetManager;
-		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("/Users/GeoVah/Projects/asp5console/HelloLeMonde/project.jason"));
+		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("invalid.json"));
 
 		// act
 		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "MySql.Data.Entity", version: ""});
 
 		// assert
 		thenable.then ( () => { done( new Error("not expected path")); } ,
+						() => { done(); });
+	});
+
+	test("removePackage is not working on valid file / missing package", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+
+		var nugetManagerPrivate: any = nugetManager;
+		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
+
+		// act
+		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "MySql.Data.Entity", version: ""});
+
+		// assert
+		thenable.then ( () => { done( new Error("not expected path")); } ,
+						() => { done(); });
+	});
+
+	test("removePackage is working as expected", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+
+		var nugetManagerPrivate: any = nugetManager;
+		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
+
+		// act
+		var thenable: Thenable<void>  = nugetManager.removePackage({ id: "testPackage", version: ""});
+
+		// assert
+		thenable.then ( () => { done(); } ,
+						() => { done(new Error("not expected path")); });
+	});
+
+	test("removePackage after removePackage is working as expected", (done: MochaDone) => {
+		// arrange
+		var nugetManager: NugetManager = new NugetManager(false);
+
+		var nugetManagerPrivate: any = nugetManager;
+		nugetManagerPrivate.getCurrentProjectFile = () => Promise.resolve( vscode.Uri.file("withTestPackage.json"));
+
+		// act
+		var thenable: Thenable<void> = nugetManager
+			.removePackage({ id: "testPackage", version: ""})
+			.then ( () => nugetManager.removePackage({ id: "testPackage", version: ""}));
+
+	 	// assert
+		thenable.then ( () => { done(new Error("not expected path")); } ,
 						() => { done(); });
 	});
 

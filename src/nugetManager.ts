@@ -87,7 +87,7 @@ export default class NugetManager {
 					.then(
 						(project: vscode.Uri ) =>
 							{
-								var parsedJSON: any = require(project.fsPath);
+								var parsedJSON: any = JSON.parse(fs.readFileSync(project.fsPath, "utf8"));
 								if (parsedJSON.dependencies.hasOwnProperty(packageId.id))
 								{
 									delete parsedJSON.dependencies[packageId.id];
@@ -109,7 +109,7 @@ export default class NugetManager {
 					.then(
 						(project: vscode.Uri ) =>
 							{
-								var parsedJSON: any = require(project.fsPath);
+								var parsedJSON: any = JSON.parse(fs.readFileSync(project.fsPath, "utf8"));
 								if (!parsedJSON.hasOwnProperty("dependencies"))
 								{
 									parsedJSON.dependecies = [];
