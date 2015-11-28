@@ -2,6 +2,8 @@
 
 import * as vscode from "vscode";
 
+import * as https from "https";
+
 import * as http from "http";
 
 import * as fs from "fs";
@@ -11,6 +13,11 @@ import * as fs from "fs";
  * FIXME base class unrelated to vs code could be completely reused outisde ?? 
  */
 export default class NugetManager {
+
+
+	constructor() {
+		// getJsonResponse("")
+	}
 
 	/**
 	 * Get the list of the currently referenced packages
@@ -100,7 +107,7 @@ export default class NugetManager {
 	 * @param idPattern pattern to be used for filtering.
 	 */
 	private getQueryUri(idPattern: string): string {
-		return "http://api-v3search-0.nuget.org/query?q=Id:" + idPattern + "&take=10";
+		return "https://api-v3search-0.nuget.org/query?q=Id:" + idPattern + "&take=10";
 	}
 
 	private getCurrentProjectFile(): Thenable<vscode.Uri> {
@@ -134,7 +141,7 @@ export default class NugetManager {
 		return new Promise<any>(
 			(resolve: (value: any ) => void, reject: (reason?: any) => void) =>
 				{
-					http.get(
+					https.get(
 						uri,
 						(resp: http.IncomingMessage) => {
 							// explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
