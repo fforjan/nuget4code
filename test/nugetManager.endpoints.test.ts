@@ -30,7 +30,7 @@ suite("Nuget4Code endpoints-related tests", () => {
 		nugetManagerPrivate.queryEndpoint = "htts://example:4242/";
 
 		// act
-		var value:Object = nugetManagerPrivate.getQueryUri("random");
+		var value: Object = nugetManagerPrivate.getQueryUri("random");
 
 		// assert
 		value.should.startWith(nugetManagerPrivate.queryEndpoint);

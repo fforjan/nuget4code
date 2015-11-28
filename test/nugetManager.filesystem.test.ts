@@ -32,7 +32,7 @@ suite("Nuget4Code filesystem-related tests", () => {
 		});
 
 	teardown(mockfs.restore);
-	
+
 	test("removePackage should reject on invalid file", (done: MochaDone) => {
 		// arrange
 		var nugetManager: NugetManager = new NugetManager(false);
