@@ -35,7 +35,7 @@
 		},
 		{
 			"command": "extension.nuget4code.install",
-			"title": "Nuget: query nuget repository and install the selected package into the current project json"
+			"title": "Nuget: Install a package from the project.info"
 		}]
 	},
 	"scripts": {
