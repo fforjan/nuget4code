@@ -1,4 +1,5 @@
-# Nuget4Code [![Build status](https://travis-ci.org/fforjan/nuget4code.svg)](https://travis-ci.org/fforjan/nuget4code)
+
+# ![Icon](icon.png) Nuget4Code [![Build status](https://travis-ci.org/fforjan/nuget4code.svg)](https://travis-ci.org/fforjan/nuget4code)
 
 This is a simple extension to add and remove nuget packages to your project.json.
 
@@ -15,15 +16,18 @@ Also, instead of dogfood, I prefer to eat my own nuggets.. So here is nuget4code
 - Upgrade to latest
 
 ## Current limitation:
-- the repository is hard-coded to nuget.org.
-- It only support one project.json. If you have multiple, it will check if the active document is a project.json and use that one if required.
+- Only one repository which must be a gallery.
+- It only support one project.json. If you have multiple, it will check if the active document is a project.json and use that one if possible.
 - it only installs the latest version.
 - it doesn't take care of the dependencies
 
-## Example :
+## Commands screenshot :
 ![nuget remove and install commands](./resources/commands.png)
 
 ## Todo :
 - handle wrong cases better
 - add description for any picklist
 - support configuration (repository, number of items displayed...)
+
+## Others
+Copyright : icon is coming from http://www.clker.com/clipart-15451.html

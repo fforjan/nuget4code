@@ -2,6 +2,7 @@
   "name": "nuget4code",
   "displayName": "Nuget4Code",
   "description": "manage nuget packages within Visual Studio Code",
+  "icon": "icon.png",
   "license": "MIT",
   "version": "0.0.2",
   "repository": {
