@@ -34,7 +34,7 @@ function nugetInstall(): void {
 	// display all nuget packages to the user so he can select on.
 	uiManager.queryPackagePattern()
 		.then( (idPattern: string ) => nugetManager.queryPackage(idPattern) )
-		.then( (packages: INugetPackageInfo[]) => { return uiManager.selectPackage(packages); } )
+		.then( (packages: INugetPackageInfo[]) => { return uiManager.selectPackage("install", packages); } )
 		.then( (selected: INugetPackageInfo) => { nugetManager.addedOrUpdatePackage(selected); });
 }
 
@@ -45,7 +45,7 @@ function nugetRemove(): void {
 	"use strict";
 	nugetManager.getCurrentPackages()
 					.then(
-						( packages: INugetPackageId[] ) => { return uiManager.selectPackageFromId(packages); },
+						( packages: INugetPackageId[] ) => { return uiManager.selectPackageFromId("removal", packages); },
 						() => vscode.window.showInformationMessage("no packages available in the current project"))
 					.then(
 						( packageId: INugetPackageId ) => { return nugetManager.removePackage(packageId); },

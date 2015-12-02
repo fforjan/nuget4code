@@ -16,7 +16,7 @@ export default class UiManager {
 	/**
 	 * Ask the user to make a choice between packages from reduced package information
 	 */
-	public selectPackageFromId(packages: INugetPackageId[]): Thenable<INugetPackageId> {
+	public selectPackageFromId(activity: string, packages: INugetPackageId[]): Thenable<INugetPackageId> {
 		var packagesInfo: IPackageSelection[] = [];
 
 		packages.forEach((element: INugetPackageId) => {
@@ -28,13 +28,13 @@ export default class UiManager {
 				});
 		});
 
-		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`}).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
 	/**
 	 * Ask the user to make a choice between packages from full package information
 	 */
-	public selectPackage(packages: INugetPackageInfo[]): Thenable<INugetPackageInfo> {
+	public selectPackage(activity: string, packages: INugetPackageInfo[]): Thenable<INugetPackageInfo> {
 		var packagesInfo: IPackageSelection[] = [];
 
 		packages.forEach((element: INugetPackageInfo) => {
@@ -46,7 +46,7 @@ export default class UiManager {
 				});
 		});
 
-		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`}).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
 	/**
@@ -96,6 +96,6 @@ export default class UiManager {
 			throw "nothing to upgrade";
 		}
 
-		return vscode.window.showQuickPick(packagesInfo).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window.showQuickPick(packagesInfo, { placeHolder: "Select a package for upgrade"} ).then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 }

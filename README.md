@@ -16,18 +16,18 @@ Also, instead of dogfood, I prefer to eat my own nuggets.. So here is nuget4code
 - Upgrade to latest
 
 ## Current limitation:
-- Only one repository which must be a gallery.
+- Only one repository which must be a gallery, but can be configured.
 - It only support one project.json. If you have multiple, it will check if the active document is a project.json and use that one if possible.
 - it only installs the latest version.
 - it doesn't take care of the dependencies
+- extension doesn't use Visual Studio Code document and write directly to file which bring inconsystency
 
 ## Commands screenshot :
 ![nuget remove and install commands](./resources/commands.png)
 
 ## Todo :
 - handle wrong cases better
-- add description for any picklist
-- support configuration (repository, number of items displayed...)
+- support extra configuration (number of items displayed...)
 
 ## Others
 Copyright : icon is coming from http://www.clker.com/clipart-15451.html
