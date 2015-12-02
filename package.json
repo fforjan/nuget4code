@@ -4,7 +4,7 @@
   "description": "manage nuget packages within Visual Studio Code",
   "icon": "icon.png",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/fforjan/nuget4code/"
