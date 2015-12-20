@@ -15,7 +15,7 @@ import * as fs from "fs";
 export default class NugetManager {
 
 	private queryEndpoint: string;
-	private endPointsInitialization: Promise<void>;
+	private endPointsInitialization: Thenable<void>;
 
 	/**
 	 * Constructor
@@ -41,7 +41,7 @@ export default class NugetManager {
 	/**
 	 * Get the list of the currently referenced packages
 	 */
-	public getCurrentPackages(): Promise<INugetPackageId[]> {
+	public getCurrentPackages(): Thenable<INugetPackageId[]> {
 		return this.getCurrentProjectFile()
 				.then( (project: vscode.Uri ) =>
 					{
@@ -64,9 +64,9 @@ export default class NugetManager {
 					});
 	}
 
-	public getFullInformation(packages: INugetPackageId[]): Promise<{ current: INugetPackageId, latest: INugetPackageInfo }[]>
+	public getFullInformation(packages: INugetPackageId[]): Thenable<{ current: INugetPackageId, latest: INugetPackageInfo }[]>
 	{
-		var requests: Promise<{ current: INugetPackageId, latest: INugetPackageInfo }>[] = [];
+		var requests: Thenable<{ current: INugetPackageId, latest: INugetPackageInfo }>[] = [];
 
 		packages.forEach( (element: INugetPackageId) => {
 			requests.push(
@@ -82,7 +82,7 @@ export default class NugetManager {
 	 * 
 	 * @param packageId package to be removed
 	 */
-	public removePackage( packageId: INugetPackageId): Promise<void> {
+	public removePackage( packageId: INugetPackageId): Thenable<void> {
 		return this.getCurrentProjectFile()
 					.then<void>(
 						(project: vscode.Uri ) =>
@@ -104,7 +104,7 @@ export default class NugetManager {
 	 * 
 	 * @param packageId package to be added
 	 */
-	public addedOrUpdatePackage( packageId: INugetPackageId): Promise<void> {
+	public addedOrUpdatePackage( packageId: INugetPackageId): Thenable<void> {
 		return this.getCurrentProjectFile()
 					.then<void>(
 						(project: vscode.Uri ) =>
@@ -127,7 +127,7 @@ export default class NugetManager {
 	 *
 	 * @param idPattern pattern to be used for lookup.
 	 */
-	public queryPackage(idPattern: string): Promise<INugetPackageInfo[]> {
+	public queryPackage(idPattern: string): Thenable<INugetPackageInfo[]> {
 		// we can only do our query if it was initialised properly
 		return this.endPointsInitialization
 			.then(
@@ -148,7 +148,7 @@ export default class NugetManager {
 		return this.queryEndpoint + "?q=Id:" + idPattern + "&take=10";
 	}
 
-	private getCurrentProjectFile(): Promise<vscode.Uri> {
+	private getCurrentProjectFile(): Thenable<vscode.Uri> {
 		return this.getAllProjectFile().then(
 						(files: vscode.Uri[]) =>
 							{
@@ -176,7 +176,7 @@ export default class NugetManager {
 	 * Get all project file from the workspace.
 	 * @remark specific method for unit testing.
 	 */
-	private getAllProjectFile(): Promise<vscode.Uri[]> {
+	private getAllProjectFile(): Thenable<vscode.Uri[]> {
 		return vscode.workspace.findFiles("**/project.json", "");
 	}
 
@@ -200,7 +200,7 @@ export default class NugetManager {
 	 * @param uri URI to be used for the web request
 	 * @return the JSON parsed result of the web request
 	 */
-	private getJsonResponse(uri: string): Promise<any> {
+	private getJsonResponse(uri: string): Thenable<any> {
 		return new Promise<any>(
 			(resolve: (value: any ) => void, reject: (reason?: any) => void) =>
 				{

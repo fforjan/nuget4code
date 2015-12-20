@@ -28,7 +28,9 @@ export default class UiManager {
 				});
 		});
 
-		return vscode.window.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`}).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window
+				.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`})
+				.then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
 	/**
@@ -46,7 +48,9 @@ export default class UiManager {
 				});
 		});
 
-		return vscode.window.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`}).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window
+				.showQuickPick(packagesInfo, { placeHolder: `Select a package for ${activity}`})
+				.then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 
 	/**
@@ -96,6 +100,8 @@ export default class UiManager {
 			throw "nothing to upgrade";
 		}
 
-		return vscode.window.showQuickPick(packagesInfo, { placeHolder: "Select a package for upgrade"} ).then( (result: IPackageSelection) => { return result.associatedPackage; } );
+		return vscode.window
+				.showQuickPick(packagesInfo, { placeHolder: "Select a package for upgrade"} )
+				.then( (result: IPackageSelection) => { return result.associatedPackage; } );
 	}
 }
