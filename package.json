@@ -60,13 +60,13 @@
   "scripts": {
     "vscode:prepublish": "node ./node_modules/vscode/bin/compile",
     "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-    "test": "node ./node_modules/vscode/bin/compile -p ./"
+    "test": "node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
     "mock-fs": "^3.4.0",
-    "should": "^7.1.1",
+    "should": "^8.0.2",
     "typescript": "^1.6.2",
-    "vscode": "0.10.x"
+    "vscode": "0.10.7-pre.3"
   },
   "dependencies": {
     "semver": "^5.1.0"
