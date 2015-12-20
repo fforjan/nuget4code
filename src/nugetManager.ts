@@ -43,7 +43,7 @@ export default class NugetManager {
 	 */
 	public getCurrentPackages(): Thenable<INugetPackageId[]> {
 		return this.getCurrentProjectFile()
-				.then( (project: vscode.Uri ) =>
+				.then( (project: vscode.TextDocument ) =>
 					{
 						var parsedJSON: any = JSON.parse(fs.readFileSync(project.fsPath, "utf8"));
 						var result: INugetPackageId[] = [];
@@ -148,7 +148,7 @@ export default class NugetManager {
 		return this.queryEndpoint + "?q=Id:" + idPattern + "&take=10";
 	}
 
-	private getCurrentProjectFile(): Thenable<vscode.Uri> {
+	private getCurrentProjectFile(): Thenable<vscode.TextDocument> {
 		return this.getAllProjectFile().then(
 						(files: vscode.Uri[]) =>
 							{
@@ -188,7 +188,7 @@ export default class NugetManager {
 		if (!vscode.window.activeTextEditor.document.isUntitled
 										&& vscode.window.activeTextEditor.document.fileName.endsWith("project.json"))
 		{
-			return vscode.window.activeTextEditor.document.uri;
+			return vscode.window.activeTextEditor.document;
 		}
 
 		return null;
