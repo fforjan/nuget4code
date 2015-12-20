@@ -43,9 +43,9 @@ export default class NugetManager {
 	 */
 	public getCurrentPackages(): Thenable<INugetPackageId[]> {
 		return this.getCurrentProjectFile()
-				.then( (project: vscode.TextDocument ) =>
+				.then( (project: vscode.Uri ) =>
 					{
-						var parsedJSON: any = JSON.parse(fs.readFileSync(project.uri.fsPath, "utf8"));
+						var parsedJSON: any = JSON.parse(fs.readFileSync(project.fsPath, "utf8"));
 						var result: INugetPackageId[] = [];
 						for (var key in parsedJSON.dependencies) {
 							if (parsedJSON.dependencies.hasOwnProperty(key)) {
