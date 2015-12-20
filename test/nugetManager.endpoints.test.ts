@@ -51,6 +51,6 @@ suite("Nuget4Code endpoints-related tests", () => {
 
 		// assert
 		ThenableAssert.shouldBeResolved(thenable, done,
-			(packages: INugetPackageInfo[] ) =>  { packages.length.should.be.equal(0); });
+			(packages: INugetPackageInfo[] ) =>  { packages.length.should.be.equal(1); });
 	});
 });
