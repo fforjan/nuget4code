@@ -15,7 +15,7 @@ export function shouldBeRejected<T>(thenable: Thenable<T>, done: MochaDone, cont
 export function shouldBeResolved<T>(thenable: Thenable<T>, done: MochaDone, continueWith: (result: T) => void = () => {} ): void  {
 	"use strict";
 
-	pthenableromise.then ( (value: T ) => {
+	thenable.then ( (value: T ) => {
 						try {
 							continueWith(value);
 							done();
