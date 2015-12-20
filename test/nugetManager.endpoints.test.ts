@@ -6,12 +6,6 @@
 //
 
 // the module 'assert' provides assertion methods from node
-import * as assert from "assert"; 
-
-import * as vscode from "vscode";
-
-import * as mockfs from "mock-fs";
-
 import "should";
 
 // you can import and use all API from the 'vscode' module
@@ -47,10 +41,10 @@ suite("Nuget4Code endpoints-related tests", () => {
 		nugetManagerPrivate.getJsonResponse = () => { throw "should not be called"; };
 
 		// act
-		var thenable = nugetManager.queryPackage("random");
+		var thenable: Thenable<INugetPackageInfo[]> = nugetManager.queryPackage("random");
 
 		// assert
 		ThenableAssert.shouldBeResolved(thenable, done,
-			(packages: INugetPackageInfo[] ) =>  { packages.length.should.be.equal(1); });
+			(packages: INugetPackageInfo[] ) =>  { packages.length.should.be.equal(0); });
 	});
 });

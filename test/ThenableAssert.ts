@@ -1,7 +1,5 @@
 "use strict";
 
-import * as vscode from "vscode";
-
 export function shouldBeRejected<T>(thenable: Thenable<T>, done: MochaDone, continueWith: (reason: any) => void = () => {}): void {
 	"use strict";
 

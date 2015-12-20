@@ -3,10 +3,6 @@
 // 
 // note: This test is leveraging the Mocha test framework.
 // please refer to their documentation on https://mochajs.org/ for help.
-//
-
-// the module 'assert' provides assertion methods from node
-import * as assert from "assert"; 
 
 import * as vscode from "vscode";
 
